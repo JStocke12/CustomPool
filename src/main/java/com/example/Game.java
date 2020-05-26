@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.Board;
 import com.example.vector;
+import com.example.VPolygon;
 import java.awt.*;
 import javax.swing.*;
 
@@ -44,10 +45,10 @@ public class Game extends Canvas implements Runnable {
         double arrowLength = relMousePos.sub(ballPos).mag();
         if(arrowLength != 0){
             vector arrowBaseWidth = rotBallMousePos.smult(5/arrowLength);
-            Polygon arrow = new Polygon();
-            arrow.addPoint((int) (ballPos.x()+arrowBaseWidth.x()),(int) (ballPos.y()+arrowBaseWidth.y()));
-            arrow.addPoint((int) (ballPos.x()-arrowBaseWidth.x()),(int) (ballPos.y()-arrowBaseWidth.y()));
-            arrow.addPoint((int) relMousePos.x(),(int) relMousePos.y());
+            VPolygon arrow = new VPolygon();
+            arrow.addPoint(ballPos.sum(arrowBaseWidth));
+            arrow.addPoint(ballPos.sub(arrowBaseWidth));
+            arrow.addPoint(relMousePos);
             offscreenGraphics.fillPolygon(arrow);
         }
         offscreenGraphics.setColor(new Color(255,255,255));
