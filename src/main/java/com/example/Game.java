@@ -10,7 +10,7 @@ public class Game extends Canvas implements Runnable {
 
     Image offscreenImage;
     Graphics offscreenGraphics;
-    Board board = new Board(new double[]{200.0,200.0,20.0,20.0});
+    Board board = new Board(new vector(200,200), 20.0);
     JFrame jf = new JFrame();
 
     Game() {
@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable {
         offscreenGraphics.setColor(new Color(200,200,200));
         vector mousePos = new vector((int) MouseInfo.getPointerInfo().getLocation().getX(), (int) MouseInfo.getPointerInfo().getLocation().getY());
         vector contentPos = new vector(jf.getX(), jf.getY());
-        vector ballPos = new vector(board.ball[0]+board.ball[2]/2, board.ball[1]+board.ball[3]/2);
+        vector ballPos = board.ballPos.sum(new vector(board.ballRadius, board.ballRadius).smult(0.5));
         vector relMousePos = mousePos.sub(contentPos).sub(new vector(8,30));
         vector rotBallMousePos = relMousePos.sub(ballPos).mmult(new vector[]{new vector(0,1),new vector(-1,0)});
         double arrowLength = relMousePos.sub(ballPos).mag();
@@ -52,7 +52,7 @@ public class Game extends Canvas implements Runnable {
             offscreenGraphics.fillPolygon(arrow);
         }
         offscreenGraphics.setColor(new Color(255,255,255));
-        offscreenGraphics.fillOval((int) board.ball[0], (int) board.ball[1], (int) board.ball[2], (int) board.ball[3]);
+        offscreenGraphics.fillOval((int) board.ballPos.x(), (int) board.ballPos.y(), (int) board.ballRadius, (int) board.ballRadius);
         g.drawImage(offscreenImage, 0, 0, this);
     }
 
