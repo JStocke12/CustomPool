@@ -43,9 +43,10 @@ public class Game extends Canvas implements Runnable {
         vector rotBallMousePos = relMousePos.sub(ballPos).mmult(new vector[]{new vector(0,1),new vector(-1,0)});
         double arrowLength = relMousePos.sub(ballPos).mag();
         if(arrowLength != 0){
+            vector arrowBaseWidth = rotBallMousePos.smult(5/arrowLength);
             Polygon arrow = new Polygon();
-            arrow.addPoint((int) (ballPos.x()+5*rotBallMousePos.x()/arrowLength),(int) (ballPos.y()+5*rotBallMousePos.y()/arrowLength));
-            arrow.addPoint((int) (ballPos.x()-5*rotBallMousePos.x()/arrowLength),(int) (ballPos.y()-5*rotBallMousePos.y()/arrowLength));
+            arrow.addPoint((int) (ballPos.x()+arrowBaseWidth.x()),(int) (ballPos.y()+arrowBaseWidth.y()));
+            arrow.addPoint((int) (ballPos.x()-arrowBaseWidth.x()),(int) (ballPos.y()-arrowBaseWidth.y()));
             arrow.addPoint((int) relMousePos.x(),(int) relMousePos.y());
             offscreenGraphics.fillPolygon(arrow);
         }
