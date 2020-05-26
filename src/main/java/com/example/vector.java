@@ -27,13 +27,48 @@ public class vector {
         return new vector(this.x()+v.x(),this.y()+v.y());
     }
 
+    public vector sum(boolean b, vector v){
+        double[] calc = new double[]{this.x()+v.x(), this.y()+v.y()};
+        if(b){
+            this.pos = calc;
+        }
+        return new vector(calc[0], calc[1]);
+    }
+
     public vector sub(vector v){
         return new vector(this.x()-v.x(),this.y()-v.y());
     }
 
+    public vector sub(boolean b, vector v){
+        double[] calc = new double[]{this.x()-v.x(), this.y()-v.y()};
+        if(b){
+            this.pos = calc;
+        }
+        return new vector(calc[0], calc[1]);
+    }
+
+    public vector smult(double a){
+        return new vector(this.x()*a, this.y()*a);
+    }
+
+    public vector smult(boolean b, double a){
+        double[] calc = new double[]{this.x()*a, this.y()*a};
+        if(b){
+            this.pos = calc;
+        }
+        return new vector(calc[0], calc[1]);
+    }
+
     public vector mmult(vector[] matr){
-        this.pos = new double[]{this.dot(matr[0]), this.dot(matr[1])};
-        return this;
+        return new vector(this.dot(matr[0]), this.dot(matr[1]));
+    }
+
+    public vector mmult(boolean b, vector[] matr){
+        double[] calc = new double[]{this.dot(matr[0]), this.dot(matr[1])};
+        if(b){
+            this.pos = calc;
+        }
+        return new vector(calc[0], calc[1]);
     }
 
     public double mag(){
