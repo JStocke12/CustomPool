@@ -4,9 +4,10 @@ import com.example.Board;
 import com.example.vector;
 import com.example.VPolygon;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable, MouseListener {
 
     Image offscreenImage;
     Graphics offscreenGraphics;
@@ -19,6 +20,7 @@ public class Game extends Canvas implements Runnable {
         jf.getContentPane().add(this, BorderLayout.CENTER);
         jf.setSize(new Dimension(500,500+30));
         jf.setVisible(true);
+        jf.addMouseListener(this);
     }
 
     public void run() {
@@ -39,7 +41,7 @@ public class Game extends Canvas implements Runnable {
         offscreenGraphics.setColor(new Color(200,200,200));
         vector mousePos = new vector((int) MouseInfo.getPointerInfo().getLocation().getX(), (int) MouseInfo.getPointerInfo().getLocation().getY());
         vector contentPos = new vector(jf.getX(), jf.getY());
-        vector ballPos = board.ballPos.sum(new vector(board.ballRadius, board.ballRadius).smult(0.5));
+        vector ballPos = board.ballPos.sum(new vector(1,1).smult(board.ballRadius).smult(0.5));
         vector relMousePos = mousePos.sub(contentPos).sub(new vector(8,30));
         vector rotBallMousePos = relMousePos.sub(ballPos).mmult(new vector[]{new vector(0,1),new vector(-1,0)});
         double arrowLength = relMousePos.sub(ballPos).mag();
@@ -58,10 +60,23 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void update(Graphics g){
+        board.update();
         paint(g);
     }
 
     public static void main(String[] args) {
         Game game = new Game();
     }
+
+    public void mouseClicked(MouseEvent e){
+        board.hit(new vector(e.getX(), e.getY()).smult(0.05));
+    }
+
+    public void mousePressed(MouseEvent e){}
+
+    public void mouseReleased(MouseEvent e){}
+
+    public void mouseEntered(MouseEvent e){}
+
+    public void mouseExited(MouseEvent e){}
 }
