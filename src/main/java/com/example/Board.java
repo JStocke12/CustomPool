@@ -13,11 +13,16 @@ public class Board {
     }
 
     void hit(vector v) {
-        this.velocity = v;
-        System.out.println("Hello World!");
+        if(this.velocity.dot(this.velocity) == 0) {
+            this.velocity = v;
+        }
     }
 
     void update(){
-        this.ballPos.sum(velocity);
+        this.ballPos.sum(true, velocity);
+        this.velocity.sub(true, this.velocity.smult(0.005));
+        if(this.velocity.dot(this.velocity) < 0.04){
+            this.velocity = new vector(0,0);
+        }
     }
 }

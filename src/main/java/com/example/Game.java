@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Game extends Canvas implements Runnable, MouseListener {
+public class Game extends JPanel implements Runnable, MouseListener {
 
     Image offscreenImage;
     Graphics offscreenGraphics;
@@ -20,7 +20,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
         jf.getContentPane().add(this, BorderLayout.CENTER);
         jf.setSize(new Dimension(500,500+30));
         jf.setVisible(true);
-        jf.addMouseListener(this);
+        jf.getContentPane().addMouseListener(this);
     }
 
     public void run() {
@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable, MouseListener {
                 Thread.sleep(16, 667000);
             } catch (InterruptedException e) {}
             repaint();
+            board.update();
         }
     }
 
@@ -60,7 +61,6 @@ public class Game extends Canvas implements Runnable, MouseListener {
 
     @Override
     public void update(Graphics g){
-        board.update();
         paint(g);
     }
 
@@ -68,13 +68,13 @@ public class Game extends Canvas implements Runnable, MouseListener {
         Game game = new Game();
     }
 
-    public void mouseClicked(MouseEvent e){
-        board.hit(new vector(e.getX(), e.getY()).smult(0.05));
-    }
+    public void mouseClicked(MouseEvent e){}
 
     public void mousePressed(MouseEvent e){}
 
-    public void mouseReleased(MouseEvent e){}
+    public void mouseReleased(MouseEvent e){
+        board.hit(new vector(e.getX(), e.getY()).sub(board.ballPos).smult(0.05));
+    }
 
     public void mouseEntered(MouseEvent e){}
 
