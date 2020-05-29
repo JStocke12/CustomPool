@@ -20,7 +20,7 @@ public class Board {
 
     void update(){
         for(int i = 0; i < balls.length; i++){
-            this.balls[i].update();
+            this.balls[i].update(this.surfaces);
         }
     }
 }
