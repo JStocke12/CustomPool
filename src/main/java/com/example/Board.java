@@ -5,9 +5,11 @@ import com.example.Ball;
 
 public class Board {
     Ball[] balls;
+    Surface[] surfaces;
 
-    public Board(Ball[] balls) {
+    public Board(Ball[] balls, Surface[] surfaces) {
         this.balls = balls;
+        this.surfaces = surfaces;
     }
 
     void hitQue(vector v) {

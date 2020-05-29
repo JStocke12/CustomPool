@@ -11,7 +11,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
 
     Image offscreenImage;
     Graphics offscreenGraphics;
-    Board board = new Board(new Ball[]{new Ball(new vector(200,200))});
+    Board board = new Board(new Ball[]{new Ball(new vector(200,200))}, new Surface[]{});
     JFrame jf = new JFrame();
 
     Game() {
