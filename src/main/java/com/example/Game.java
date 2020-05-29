@@ -11,7 +11,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
 
     Image offscreenImage;
     Graphics offscreenGraphics;
-    Board board = new Board(new vector(200,200), 20.0);
+    Board board = new Board(new Ball[]{new Ball(new vector(200,200))});
     JFrame jf = new JFrame();
 
     Game() {
@@ -42,7 +42,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
         offscreenGraphics.setColor(new Color(200,200,200));
         vector mousePos = new vector((int) MouseInfo.getPointerInfo().getLocation().getX(), (int) MouseInfo.getPointerInfo().getLocation().getY());
         vector contentPos = new vector(jf.getX(), jf.getY());
-        vector ballPos = board.ballPos.sum(new vector(1,1).smult(board.ballRadius).smult(0.5));
+        vector ballPos = board.balls[0].pos.sum(new vector(1,1).smult(board.balls[0].radius).smult(0.5));
         vector relMousePos = mousePos.sub(contentPos).sub(new vector(8,30));
         vector rotBallMousePos = relMousePos.sub(ballPos).mmult(new vector[]{new vector(0,1),new vector(-1,0)});
         double arrowLength = relMousePos.sub(ballPos).mag();
@@ -55,7 +55,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
             offscreenGraphics.fillPolygon(arrow);
         }
         offscreenGraphics.setColor(new Color(255,255,255));
-        offscreenGraphics.fillOval((int) board.ballPos.x(), (int) board.ballPos.y(), (int) board.ballRadius, (int) board.ballRadius);
+        offscreenGraphics.fillOval((int) board.balls[0].pos.x(), (int) board.balls[0].pos.y(), (int) board.balls[0].radius, (int) board.balls[0].radius);
         g.drawImage(offscreenImage, 0, 0, this);
     }
 
@@ -73,7 +73,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
     public void mousePressed(MouseEvent e){}
 
     public void mouseReleased(MouseEvent e){
-        board.hit(new vector(e.getX(), e.getY()).sub(board.ballPos).smult(0.05));
+        board.hitQue(new vector(e.getX(), e.getY()).sub(board.balls[0].pos).smult(0.05));
     }
 
     public void mouseEntered(MouseEvent e){}

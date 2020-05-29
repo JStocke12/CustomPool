@@ -1,28 +1,24 @@
 package com.example;
 
 import java.util.Vector;
+import com.example.Ball;
 
 public class Board {
-    vector ballPos;
-    double ballRadius;
-    vector velocity = new vector(0,0);
+    Ball[] balls;
 
-    public Board(vector ballPos, double ballRadius) {
-        this.ballPos = ballPos;
-        this.ballRadius = ballRadius;
+    public Board(Ball[] balls) {
+        this.balls = balls;
     }
 
-    void hit(vector v) {
-        if(this.velocity.dot(this.velocity) == 0) {
-            this.velocity = v;
+    void hitQue(vector v) {
+        if(this.balls[0].velocity.dot(this.balls[0].velocity) == 0) {
+            this.balls[0].velocity = v;
         }
     }
 
     void update(){
-        this.ballPos.sum(true, velocity);
-        this.velocity.sub(true, this.velocity.smult(0.005));
-        if(this.velocity.dot(this.velocity) < 0.04){
-            this.velocity = new vector(0,0);
+        for(int i = 0; i < balls.length; i++){
+            this.balls[i].update();
         }
     }
 }
