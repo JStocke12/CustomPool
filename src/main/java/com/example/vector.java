@@ -23,6 +23,10 @@ public class vector {
         return out;
     }
 
+    public double cross(vector v){
+        return (this.x()*v.y())-(this.y()*v.x());
+    }
+
     public vector sum(vector v){
         return new vector(this.x()+v.x(),this.y()+v.y());
     }
